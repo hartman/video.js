@@ -1,5 +1,11 @@
 @media print {
-  .video-js *:not(.vjs-tech):not(.vjs-poster) {
-    visibility:hidden;
+  .video-js > *:not(.vjs-tech):not(.vjs-poster) {
+    visibility: hidden;
+  }
+  .vjs-poster {
+    background-image: none !important;
+  }
+  .vjs-poster img {
+    display: block;
   }
 }

@@ -50,11 +50,12 @@ class PosterImage extends ClickableComponent {
 
     // To ensure the poster image resizes while maintaining its original aspect
     // ratio, use a div with `background-size` when available. For browsers that
-    // do not support `background-size` (e.g. IE8), fall back on using a regular
-    // img element.
-    if (!browser.BACKGROUND_SIZE_SUPPORTED) {
-      this.fallbackImg_ = Dom.createEl('img');
-      el.appendChild(this.fallbackImg_);
+    // do not support `background-size` (e.g. IE8), and for print fall back on
+    // using a regular img element.
+    this.fallbackImg_ = Dom.createEl('img');
+    el.appendChild(this.fallbackImg_);
+    if( !browser.BACKGROUND_SIZE_SUPPORTED ) {
+      this.fallbackImg_.addClass('nobackgroundsize');
     }
 
     return el;
@@ -86,9 +87,8 @@ class PosterImage extends ClickableComponent {
    * @method setSrc
    */
   setSrc(url) {
-    if (this.fallbackImg_) {
-      this.fallbackImg_.src = url;
-    } else {
+    this.fallbackImg_.src = url;
+    if (browser.BACKGROUND_SIZE_SUPPORTED) {
       let backgroundImage = '';
       // Any falsey values should stay as an empty string, otherwise
       // this will throw an extra error
